@@ -30,6 +30,27 @@
          .attr("stroke-width", 2)
          .attr("r", radialScale(0));
 
+      for (var i = 0; i < features.length; i++) {
+         let ft_name = features[i];
+         let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
+         let line_coordinate = angleToCoordinate(angle, 10);
+         let label_coordinate = angleToCoordinate(angle, 10.5);
+
+         //draw axis line
+         svg.append("line")
+         .attr("x1", 300)
+         .attr("y1", 300)
+         .attr("x2", line_coordinate.x)
+         .attr("y2", line_coordinate.y)
+         .attr("stroke","black");
+
+         //draw axis label
+         svg.append("text")
+         .attr("x", label_coordinate.x)
+         .attr("y", label_coordinate.y)
+         .text(ft_name);
+       };
+
 
 
 

@@ -9,17 +9,30 @@
                   .attr("height", 600);
 
       let radialScale = d3.scaleLinear()
-                          .domain([0, 10])
+                          .domain([-2, 2.2])
                           .range([0, 250]);
 
-      let ticks = [2, 4, 6, 8, 10];
+      let ticks = [-2, -1, 1, 2];
 
       ticks.forEach(t => svg.append("circle")
                             .attr("cx", 300)
                             .attr("cy", 300)
                             .attr("fill", "none")
-                            .attr("stroke", "gray")
+                            .attr("stroke", "lightGray")
                             .attr("r", radialScale(t))
       );
+
+      svg.append("circle")
+         .attr("cx", 300)
+         .attr("cy", 300)
+         .attr("fill", "none")
+         .attr("stroke", "gray")
+         .attr("stroke-width", 2)
+         .attr("r", radialScale(0));
+
+
+
+
+
     </script>
 </html>

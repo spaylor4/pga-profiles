@@ -16,6 +16,12 @@
 
       let features = ['avg_off_tee', 'avg_approach', 'avg_around', 'avg_putting'];
 
+      function angleToCoordinate(angle, value) {
+        let x = Math.cos(angle) * radialScale(value);
+        let y = Math.sin(angle) * radialScale(value);
+        return { x: 300 + x, y: 300 - y };
+      }
+
       ticks.forEach(t => svg.append("circle")
                             .attr("cx", 300)
                             .attr("cy", 300)
@@ -39,7 +45,7 @@
          let label_coordinate = angleToCoordinate(angle, 2.2);
 
          //draw axis line
-         svg.append("line")
+      svg.append("line")
          .attr("x1", 300)
          .attr("y1", 300)
          .attr("x2", line_coordinate.x)
@@ -47,7 +53,7 @@
          .attr("stroke","black");
 
          //draw axis label
-         svg.append("text")
+      svg.append("text")
          .attr("x", label_coordinate.x)
          .attr("y", label_coordinate.y)
          .text(ft_name);

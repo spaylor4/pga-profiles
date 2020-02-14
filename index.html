@@ -92,7 +92,21 @@
                     }];
       debugger;
 
+      for (var i = 0; i < data.length; i ++){
+          let d = data[i];
+          let color = colors[i];
+          let coordinates = getPathCoordinates(d);
 
+          //draw the path element
+          svg.append("path")
+            .datum(coordinates)
+            .attr("d",line)
+            .attr("stroke-width", 3)
+            .attr("stroke", color)
+            .attr("stroke-opacity", 1)
+            .attr("fill", "none")
+            .attr("opacity", 0.5);
+      }
 
 
 

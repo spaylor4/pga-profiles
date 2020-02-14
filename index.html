@@ -3,14 +3,15 @@
     <body>
     </body>
     <script>
-      //code goes here!
+      let max_height = 400;
+
       let svg = d3.select("body").append("svg")
-                  .attr("width", 600)
-                  .attr("height", 600);
+                  .attr("width", max_height*1.2) //give extra room for labels
+                  .attr("height", max_height);
 
       let radialScale = d3.scaleLinear()
                           .domain([-2, 2.2])
-                          .range([0, 250]);
+                          .range([0, max_height/2 - 50])
 
       let ticks = [-2, -1, 1, 2];
 
@@ -25,7 +26,7 @@
       function angleToCoordinate(angle, value) {
         let x = Math.cos(angle) * radialScale(value);
         let y = Math.sin(angle) * radialScale(value);
-        return { x: 300 + x, y: 300 - y };
+        return { x: max_height/2 + x, y: max_height/2 - y };
       }
 
       function getPathCoordinates(data_point){
@@ -44,16 +45,16 @@
       }
 
       ticks.forEach(t => svg.append("circle")
-                            .attr("cx", 300)
-                            .attr("cy", 300)
+                            .attr("cx", max_height/2)
+                            .attr("cy", max_height/2)
                             .attr("fill", "none")
                             .attr("stroke", "lightGray")
                             .attr("r", radialScale(t))
       );
 
       svg.append("circle")
-         .attr("cx", 300)
-         .attr("cy", 300)
+         .attr("cx", max_height/2)
+         .attr("cy", max_height/2)
          .attr("fill", "none")
          .attr("stroke", "gray")
          .attr("stroke-width", 2)
@@ -67,8 +68,8 @@
 
          //draw axis line
       svg.append("line")
-         .attr("x1", 300)
-         .attr("y1", 300)
+         .attr("x1", max_height/2)
+         .attr("y1", max_height/2)
          .attr("x2", line_coordinate.x)
          .attr("y2", line_coordinate.y)
          .attr("stroke","black");
@@ -95,7 +96,6 @@
                       "avg_around":"-0.147",
                       "avg_putting":"0.824"
                     }];
-      debugger;
 
       for (var i = 0; i < data.length; i ++){
           let d = data[i];

@@ -35,6 +35,11 @@
               let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
               coordinates.push(angleToCoordinate(angle, data_point[ft_name]));
           }
+
+          let ft_name = features[0];
+          let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
+          coordinates.push(angleToCoordinate(angle, data_point[ft_name]));
+
           return coordinates;
       }
 

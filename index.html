@@ -78,7 +78,8 @@
       svg.append("text")
          .attr("x", label_coordinate.x)
          .attr("y", label_coordinate.y)
-         .text(ft_name);
+         .text(ft_name)
+         .attr("font-family", "sans-serif");
        };
 
       let data = [{
@@ -89,13 +90,36 @@
                      "avg_around":"0.335",
                      "avg_putting":"0.853"
                   },
-                      {"player_name":"Adam Scott",
-                      "year":"2004",
-                      "avg_off_tee":"0.18",
-                      "avg_approach":"0.571",
-                      "avg_around":"-0.147",
-                      "avg_putting":"0.824"
-                    }];
+                  {
+                     "player_name":"Tiger Woods",
+                     "year":"2005",
+                     "avg_off_tee":"0.896",
+                     "avg_approach":"0.86",
+                     "avg_around":"-0.15",
+                     "avg_putting":"0.659"
+                  },
+                  {
+                     "player_name":"Adam Scott",
+                     "year":"2004",
+                     "avg_off_tee":"0.18",
+                     "avg_approach":"0.571",
+                     "avg_around":"-0.147",
+                     "avg_putting":"0.824"
+                  },
+                  {
+                     "player_name":"Adam Scott",
+                     "year":"2005",
+                     "avg_off_tee":"0.441",
+                     "avg_approach":"0.566",
+                     "avg_around":"0.024",
+                     "avg_putting":"0.016"
+                  }];
+
+      var players = d3.nest()
+                      .key(function(d) {
+                        return d['player_name'];
+                      })
+                      .entries(data);
 
       for (var i = 0; i < data.length; i ++){
           let d = data[i];

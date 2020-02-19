@@ -5,9 +5,66 @@
     <script>
       let max_height = 400;
 
-      let svg = d3.select("body").append("svg")
+      let height = 350;
+      let width = 400;
+
+      let margin = 10;
+
+      let data = [{
+                     "player_name":"Tiger Woods",
+                     "year":"2004",
+                     "avg_off_tee":"0.321",
+                     "avg_approach":"0.873",
+                     "avg_around":"0.335",
+                     "avg_putting":"0.853"
+                  },
+                  {
+                     "player_name":"Tiger Woods",
+                     "year":"2005",
+                     "avg_off_tee":"0.896",
+                     "avg_approach":"0.86",
+                     "avg_around":"-0.15",
+                     "avg_putting":"0.659"
+                  },
+                  {
+                     "player_name":"Adam Scott",
+                     "year":"2004",
+                     "avg_off_tee":"0.18",
+                     "avg_approach":"0.571",
+                     "avg_around":"-0.147",
+                     "avg_putting":"0.824"
+                  },
+                  {
+                     "player_name":"Adam Scott",
+                     "year":"2005",
+                     "avg_off_tee":"0.441",
+                     "avg_approach":"0.566",
+                     "avg_around":"0.024",
+                     "avg_putting":"0.016"
+                  }];
+
+      var players = d3.nest()
+                      .key(function(d) {
+                        return d['player_name'];
+                      })
+                      .entries(data);
+
+      // Add an SVG element for each symbol, with the desired dimensions and margin.
+      var svg = d3
+        .select("body")
+        .selectAll("svg")
+        .data(players)
+        .enter()
+        .append("svg")
+        .attr("width", width + margin + margin)
+        .attr("height", height + margin + margin)
+        .append("g")
+        .attr("transform", "translate(" + margin + "," + margin + ")");
+
+      /*let svg = d3.select("body").append("svg")
                   .attr("width", max_height*1.2) //give extra room for labels
                   .attr("height", max_height);
+                  */
 
       let radialScale = d3.scaleLinear()
                           .domain([-2, 2.2])
@@ -82,44 +139,7 @@
          .attr("font-family", "sans-serif");
        };
 
-      let data = [{
-                     "player_name":"Tiger Woods",
-                     "year":"2004",
-                     "avg_off_tee":"0.321",
-                     "avg_approach":"0.873",
-                     "avg_around":"0.335",
-                     "avg_putting":"0.853"
-                  },
-                  {
-                     "player_name":"Tiger Woods",
-                     "year":"2005",
-                     "avg_off_tee":"0.896",
-                     "avg_approach":"0.86",
-                     "avg_around":"-0.15",
-                     "avg_putting":"0.659"
-                  },
-                  {
-                     "player_name":"Adam Scott",
-                     "year":"2004",
-                     "avg_off_tee":"0.18",
-                     "avg_approach":"0.571",
-                     "avg_around":"-0.147",
-                     "avg_putting":"0.824"
-                  },
-                  {
-                     "player_name":"Adam Scott",
-                     "year":"2005",
-                     "avg_off_tee":"0.441",
-                     "avg_approach":"0.566",
-                     "avg_around":"0.024",
-                     "avg_putting":"0.016"
-                  }];
 
-      var players = d3.nest()
-                      .key(function(d) {
-                        return d['player_name'];
-                      })
-                      .entries(data);
 
       for (var i = 0; i < data.length; i ++){
           let d = data[i];

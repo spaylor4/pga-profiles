@@ -5,9 +5,65 @@
     <script>
       let max_height = 400;
 
-      let svg = d3.select("body").append("svg")
-                  .attr("width", max_height*1.2) //give extra room for labels
-                  .attr("height", max_height);
+      let height = 350;
+      let width = 400;
+
+      let margin = 10;
+
+      let data = [{
+                     "player_name":"Tiger Woods",
+                     "year":"2004",
+                     "avg_off_tee":"0.321",
+                     "avg_approach":"0.873",
+                     "avg_around":"0.335",
+                     "avg_putting":"0.853"
+                  },
+                  {
+                     "player_name":"Tiger Woods",
+                     "year":"2005",
+                     "avg_off_tee":"0.896",
+                     "avg_approach":"0.86",
+                     "avg_around":"-0.15",
+                     "avg_putting":"0.659"
+                  },
+                  {
+                     "player_name":"Adam Scott",
+                     "year":"2004",
+                     "avg_off_tee":"0.18",
+                     "avg_approach":"0.571",
+                     "avg_around":"-0.147",
+                     "avg_putting":"0.824"
+                  },
+                  {
+                     "player_name":"Adam Scott",
+                     "year":"2005",
+                     "avg_off_tee":"0.441",
+                     "avg_approach":"0.566",
+                     "avg_around":"0.024",
+                     "avg_putting":"0.016"
+                  },
+                  {
+                     "player_name":"Stewart Cink",
+                     "year":"2004",
+                     "avg_off_tee":"-0.143",
+                     "avg_approach":"0.724",
+                     "avg_around":"0.391",
+                     "avg_putting":"0.683"
+                  }];
+
+      var players = d3.nest()
+                      .key(function(d) {
+                        return d['player_name'];
+                      })
+                      .entries(data);
+
+      /* might need to update to nest by both player and year
+      d3.nest()
+        .key(function(d) {
+                        return d['player_name'];
+                      })
+        .key(function(d) {return d['year']})
+        .entries(data); */
 
       let radialScale = d3.scaleLinear()
                           .domain([-2, 2.2])
@@ -44,75 +100,91 @@
           return coordinates;
       }
 
-      ticks.forEach(t => svg.append("circle")
-                            .attr("cx", max_height/2)
-                            .attr("cy", max_height/2)
-                            .attr("fill", "none")
-                            .attr("stroke", "lightGray")
-                            .attr("r", radialScale(t))
-      );
+      function drawPlayerChart(player) {
+        var svg = d3.select(this);
 
-      svg.append("circle")
-         .attr("cx", max_height/2)
-         .attr("cy", max_height/2)
-         .attr("fill", "none")
-         .attr("stroke", "gray")
-         .attr("stroke-width", 2)
-         .attr("r", radialScale(0));
+        debugger;
 
-      for (var i = 0; i < features.length; i++) {
-         let ft_name = features[i];
-         let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
-         let line_coordinate = angleToCoordinate(angle, 2);
-         let label_coordinate = angleToCoordinate(angle, 2.2);
+        ticks.forEach(t => svg.append("circle")
+                              .attr("cx", max_height/2)
+                              .attr("cy", max_height/2)
+                              .attr("fill", "none")
+                              .attr("stroke", "lightGray")
+                              .attr("r", radialScale(t))
+        );
 
-         //draw axis line
-      svg.append("line")
-         .attr("x1", max_height/2)
-         .attr("y1", max_height/2)
-         .attr("x2", line_coordinate.x)
-         .attr("y2", line_coordinate.y)
-         .attr("stroke","black");
+        svg.append("circle")
+           .attr("cx", max_height/2)
+           .attr("cy", max_height/2)
+           .attr("fill", "none")
+           .attr("stroke", "gray")
+           .attr("stroke-width", 2)
+           .attr("r", radialScale(0));
 
-         //draw axis label
-      svg.append("text")
-         .attr("x", label_coordinate.x)
-         .attr("y", label_coordinate.y)
-         .text(ft_name);
-       };
+        for (var i = 0; i < features.length; i++) {
+           let ft_name = features[i];
+           let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
+           let line_coordinate = angleToCoordinate(angle, 2);
+           let label_coordinate = angleToCoordinate(angle, 2.2);
 
-      let data = [{
-                     "player_name":"Tiger Woods",
-                     "year":"2004",
-                     "avg_off_tee":"0.321",
-                     "avg_approach":"0.873",
-                     "avg_around":"0.335",
-                     "avg_putting":"0.853"
-                  },
-                      {"player_name":"Adam Scott",
-                      "year":"2004",
-                      "avg_off_tee":"0.18",
-                      "avg_approach":"0.571",
-                      "avg_around":"-0.147",
-                      "avg_putting":"0.824"
-                    }];
+           //draw axis line
+        svg.append("line")
+           .attr("x1", max_height/2)
+           .attr("y1", max_height/2)
+           .attr("x2", line_coordinate.x)
+           .attr("y2", line_coordinate.y)
+           .attr("stroke","black");
 
-      for (var i = 0; i < data.length; i ++){
-          let d = data[i];
-          let color = colors[i];
-          let coordinates = getPathCoordinates(d);
+           //draw axis label
+        svg.append("text")
+           .attr("x", label_coordinate.x)
+           .attr("y", label_coordinate.y)
+           .text(ft_name)
+           .attr("font-family", "sans-serif");
+         };
 
-          //draw the path element
-          svg.append("path")
-            .datum(coordinates)
-            .attr("d",line)
-            .attr("stroke-width", 3)
-            .attr("stroke", color)
-            .attr("stroke-opacity", 1)
-            .attr("fill", "none")
-            .attr("opacity", 0.5);
+         //add paths for each data point
+         /*for (var i = 0; i < player.values.length; i ++){
+             let d = player.values[i];
+             let color = colors[0];
+             let coordinates = getPathCoordinates(d);
+
+             //draw the path element
+             svg.append("path")
+               .datum(coordinates)
+               .attr("d",line)
+               .attr("stroke-width", 3)
+               .attr("stroke", color)
+               .attr("stroke-opacity", 1)
+               .attr("fill", "none")
+               .attr("opacity", 0.5);
+         } */
+
+         player.values.forEach(row =>
+           svg
+             .append("path")
+             .datum(getPathCoordinates(row))
+             .attr("d", line)
+             .attr("stroke-width", 3)
+             .attr("stroke", 'orange')
+             .attr("stroke-opacity", 1)
+             .attr("fill", "none")
+             .attr("opacity", 0.5));
+
       }
 
+      // Add an SVG element for each symbol, with the desired dimensions and margin.
+      var svg = d3
+        .select("body")
+        .selectAll("svg")
+        .data(players)
+        .enter()
+        .append("svg")
+        .attr("width", width + margin + margin)
+        .attr("height", height + margin + margin)
+        .append("g")
+        .attr("transform", "translate(" + margin + "," + margin + ")")
+        .each(drawPlayerChart);
 
 
     </script>

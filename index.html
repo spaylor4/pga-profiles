@@ -160,6 +160,12 @@
                .attr("opacity", 0.5);
          } */
 
+         svg.append("text")
+            .attr("x", margin)
+            .attr("y", margin)
+            .text(player.key)
+            .attr("font-family", "sans-serif");
+
          player.values.forEach(row =>
            svg
              .append("path")

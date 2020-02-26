@@ -103,6 +103,8 @@
       function drawPlayerChart(player) {
         var svg = d3.select(this);
 
+        debugger;
+
         ticks.forEach(t => svg.append("circle")
                               .attr("cx", max_height/2)
                               .attr("cy", max_height/2)
@@ -140,6 +142,35 @@
            .text(ft_name)
            .attr("font-family", "sans-serif");
          };
+
+         //add paths for each data point
+         /*for (var i = 0; i < player.values.length; i ++){
+             let d = player.values[i];
+             let color = colors[0];
+             let coordinates = getPathCoordinates(d);
+
+             //draw the path element
+             svg.append("path")
+               .datum(coordinates)
+               .attr("d",line)
+               .attr("stroke-width", 3)
+               .attr("stroke", color)
+               .attr("stroke-opacity", 1)
+               .attr("fill", "none")
+               .attr("opacity", 0.5);
+         } */
+
+         player.values.forEach(row =>
+           svg
+             .append("path")
+             .datum(getPathCoordinates(row))
+             .attr("d", line)
+             .attr("stroke-width", 3)
+             .attr("stroke", 'orange')
+             .attr("stroke-opacity", 1)
+             .attr("fill", "none")
+             .attr("opacity", 0.5));
+
       }
 
       // Add an SVG element for each symbol, with the desired dimensions and margin.
@@ -155,26 +186,7 @@
         .attr("transform", "translate(" + margin + "," + margin + ")")
         .each(drawPlayerChart);
 
-
-
-
-      debugger;
-
-      /* for (var i = 0; i < data.length; i ++){
-          let d = data[i];
-          let color = colors[0];
-          let coordinates = getPathCoordinates(d);
-
-          //draw the path element
-          svg.append("path")
-            .datum(coordinates)
-            .attr("d",line)
-            .attr("stroke-width", 3)
-            .attr("stroke", color)
-            .attr("stroke-opacity", 1)
-            .attr("fill", "none")
-            .attr("opacity", 0.5);
-      }
+      /*
 
       data.forEach(row =>
         svg

@@ -17,3 +17,5 @@ Running list of tutorials & links I found helpful in the course of this project:
 * Small multiples [tutorial](https://bl.ocks.org/mbostock/9490313) by Mike Bostock
 
 * Nesting [explanation](https://amber.rbind.io/2017/05/02/nesting/) by Amber Thomas
+
+* Mouseover highlighting [example](http://bl.ocks.org/phil-pedruco/9032348)

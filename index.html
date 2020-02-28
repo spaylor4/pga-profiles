@@ -4,8 +4,8 @@
       .tooltip {
         position: absolute;
         text-align: center;
-        width: 60px;
-        height: 12px;
+        width: 80px;
+        height: 24px;
         padding: 8px;
         margin-top: -20px;
         font: 10px sans-serif;
@@ -182,8 +182,8 @@
               })
               .on("mousemove", function() {
                 div.html(row.year + "</br>SG Putting: " + row.avg_putting)
-                   .style("left", (d3.event.pageX - 34) + "px")
-                   .style("top", (d3.event.pageY - 15) + "px");
+                   .style("left", (d3.event.pageX - 40) + "px")
+                   .style("top", (d3.event.pageY - 20) + "px");
               })
               .on("mouseout", function(d, i) {
                 d3.select(this)

@@ -1,5 +1,18 @@
 <html>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+      .tooltip {
+        position: absolute;
+        text-align: center;
+        width: 60px;
+        height: 12px;
+        padding: 8px;
+        margin-top: -20px;
+        font: 10px sans-serif;
+        background: #ddd;
+        pointer-events: none;
+      }
+    </style>
     <body>
     </body>
     <script>
@@ -167,8 +180,12 @@
 
                 div.transition()
                     .duration(200)
-                    .style("opacity", .9);
-                div	.html(row.year);
+                    .style("opacity", .9);;
+              })
+              .on("mousemove", function() {
+                div.text(row.year)
+                   .style("left", (d3.event.pageX - 34) + "px")
+                   .style("top", (d3.event.pageY - 12) + "px");
               })
               .on("mouseout", function(d, i) {
                 d3.select(this)

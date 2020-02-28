@@ -181,9 +181,9 @@
                     .style("opacity", .9);;
               })
               .on("mousemove", function() {
-                div.text(row.year)
+                div.html(row.year + "</br>SG Putting: " + row.avg_putting)
                    .style("left", (d3.event.pageX - 34) + "px")
-                   .style("top", (d3.event.pageY - 12) + "px");
+                   .style("top", (d3.event.pageY - 15) + "px");
               })
               .on("mouseout", function(d, i) {
                 d3.select(this)
